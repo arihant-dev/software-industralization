@@ -3,8 +3,8 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
-from FlaskWebProject1 import app
+from flask import jsonify, render_template
+from FlaskWebProject1 import app, get_db_connection
 
 @app.route('/')
 @app.route('/home')
@@ -35,3 +35,17 @@ def about():
         year=datetime.now().year,
         message='Your application description page.'
     )
+
+@app.route('/db')
+def db():
+    """Returns the database time."""
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT CURRENT_TIMESTAMP()")
+        result = cursor.fetchone()
+    finally:
+        cursor.close()
+        connection.close()
+    db_time = result[0].isoformat() if result else None
+    return jsonify({"time_now": db_time})
