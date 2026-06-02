@@ -45,7 +45,7 @@ def db():
         cursor.execute("SELECT CURRENT_TIMESTAMP()")
         result = cursor.fetchone()
         db_time = result[0].isoformat() if result else None
-        return jsonify({"db_time": db_time})
+        return jsonify({"db_time": db_time, "message": "This was updated for docker-compose assignment on date 2024-06-02."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:

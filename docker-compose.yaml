@@ -1,0 +1,27 @@
+services:
+  flask-app:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - MYSQL_HOST=devops-mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=arihant
+      - MYSQL_DATABASE=flask_db
+      - MYSQL_PORT=3306
+    depends_on:
+      - devops-mysql
+  
+  devops-mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=arihant
+      - MYSQL_DATABASE=flask_db
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql-data:
