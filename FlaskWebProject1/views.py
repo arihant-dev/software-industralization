@@ -44,12 +44,10 @@ def db():
     try:
         cursor.execute("SELECT CURRENT_TIMESTAMP()")
         result = cursor.fetchone()
+        db_time = result[0].isoformat() if result else None
+        return jsonify({"db_time": db_time})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
         connection.close()
-    db_time = result[0].isoformat() if result else None
-    return jsonify({"time_now": db_time, 
-                    "mysql_host": connection.server_host,
-                    "mysql_port": connection.server_port,
-                    "mysql_user": connection.user,
-                    "mysql_db": connection.database})

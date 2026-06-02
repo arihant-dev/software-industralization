@@ -14,10 +14,10 @@ load_dotenv()
 
 def get_db_connection():
     required_env = {
-        "MYSQL_HOST": "mysql",
-        "MYSQL_DATABASE": "flask_db",
-        "MYSQL_USER": "root",
-        "MYSQL_PASSWORD": "arihant",
+        "MYSQL_HOST": os.environ.get("MYSQL_HOST"),
+        "MYSQL_DATABASE": os.environ.get("MYSQL_DATABASE"),
+        "MYSQL_USER": os.environ.get("MYSQL_USER"),
+        "MYSQL_PASSWORD": os.environ.get("MYSQL_PASSWORD"),
     }
     missing = [name for name, value in required_env.items() if not value]
     if missing:
