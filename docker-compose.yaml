@@ -13,7 +13,7 @@ services:
       - devops-mysql
   
   devops-mysql:
-    image: mysql:latest
+    image: docker.io/library/mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
