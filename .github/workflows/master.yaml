@@ -65,9 +65,10 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
+            cd /home/arihant/software-industralization
             COMMIT_HASH=${{ needs.build.outputs.commit_hash }}
             echo "Pulling latest Docker image..."
-            podman pull iarihant/flask-app:${COMMIT_HASH}
+            podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
             echo "Stopping existing container using podman compose..."
             podman-compose down
             echo "Updating docker-compose.yaml to use the new image..."
