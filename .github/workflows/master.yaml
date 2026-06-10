@@ -69,11 +69,9 @@ jobs:
           script: |
             cd /home/arihant/software-industralization
             COMMIT_HASH=${{ needs.build.outputs.commit_hash }}
-            echo "Pulling latest Docker image..."
-            podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
-            echo "Stopping existing container using podman compose..."
-            podman-compose down
             echo "Updating docker-compose.yaml to use the new image..."
             sed -i "s|image: iarihant/flask-app:.*|image: iarihant/flask-app:${COMMIT_HASH}|g" docker-compose.yaml
-            echo "Starting new container with podman compose..."
+            echo "Pulling latest Docker image..."
+            podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
+            echo "Deploying updated containers..."
             podman-compose up -d
