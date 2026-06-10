@@ -1,0 +1,15 @@
+name: Build and Deploy python application to Azure Web App - master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: List Files
+        run: |
+          echo "Arihant is calling List Files"
