@@ -4,7 +4,7 @@ Routes and views for the flask application.
 
 from datetime import datetime
 from flask import jsonify, render_template
-from FlaskWebProject1 import app
+from FlaskWebProject1 import app, get_db_connection
 
 @app.route('/')
 @app.route('/home')
@@ -39,14 +39,13 @@ def about():
 @app.route('/db')
 def db():
     """Returns the database time."""
-    from FlaskWebProject1 import get_db_connection
     connection = get_db_connection()
     cursor = connection.cursor()
     try:
         cursor.execute("SELECT CURRENT_TIMESTAMP()")
         result = cursor.fetchone()
         db_time = result[0].isoformat() if result else None
-        return jsonify({"db_time": db_time, "message": "This was updated for docker-compose assignment on date 2024-06-02."})
+        return jsonify({"db_time": db_time, "message": "This was updated for docker-compose assignment on date 2024-06-08."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
