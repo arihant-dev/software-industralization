@@ -38,10 +38,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Commit Hash
+        id: vars
         run: |
           COMMIT_HASH=$(echo ${{ github.sha }} | cut -c 1-7)
           echo "Commit Hash: $COMMIT_HASH"
           echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
       
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
@@ -51,7 +53,7 @@ jobs:
           tags: iarihant/flask-app:${{ env.COMMIT_HASH }}
     
     outputs:
-      commit_hash: ${{ env.COMMIT_HASH }}
+      commit_hash: ${{ steps.vars.outputs.commit_hash }}
 
   deploy:
     needs: build
