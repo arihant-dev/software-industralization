@@ -77,7 +77,11 @@ jobs:
             cd /home/arihant/software-industralization
             COMMIT_HASH=${{ needs.build.outputs.commit_hash }}
             echo "Updating image tag variables in .env file..."
-            echo "APP2_IMAGE_TAG=${COMMIT_HASH}" >> .env
+            if grep -q "^APP2_IMAGE_TAG=" .env; then
+              sed -i "s/^APP2_IMAGE_TAG=.*/APP2_IMAGE_TAG=${COMMIT_HASH}/" .env
+            else
+              echo "APP2_IMAGE_TAG=${COMMIT_HASH}" >> .env
+            fi
             echo "Pulling latest Docker image..."
             podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
             echo "Deploying updated containers..."
