@@ -48,4 +48,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: iarihant/flask-app:$COMMIT_HASH
+          tags: iarihant/flask-app:${{ env.COMMIT_HASH }}
