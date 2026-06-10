@@ -78,6 +78,9 @@ jobs:
             COMMIT_HASH=${{ needs.build.outputs.commit_hash }}
             echo "Updating docker-compose.yaml to use the new image..."
             sed -i "s|image: iarihant/flask-app:.*|image: iarihant/flask-app:${COMMIT_HASH}|g" docker-compose.yaml
+            echo "Updating image tag variables in .env file..."
+            echo "APP1_IMAGE_TAG=${COMMIT_HASH}" > .env
+            echo "APP2_IMAGE_TAG=${COMMIT_HASH}" >> .env
             echo "Pulling latest Docker image..."
             podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
             echo "Deploying updated containers..."

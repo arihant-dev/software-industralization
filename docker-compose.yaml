@@ -1,6 +1,6 @@
 services:
-  flask-app:
-    image: iarihant/flask-app:98e4441
+  flask-app-1:
+    image: iarihant/flask-app:${APP1_IMAGE_TAG}
     ports:
       - 8000:8000
     environment:
@@ -11,7 +11,20 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     depends_on:
       - devops-mysql
-  
+
+  flask-app-2:
+    image: iarihant/flask-app:${APP2_IMAGE_TAG}
+    ports:
+      - 8001:8000
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PORT=${MYSQL_PORT}
+    depends_on:
+      - devops-mysql
+
   devops-mysql:
     image: docker.io/library/mysql:latest
     environment:
