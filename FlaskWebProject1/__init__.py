@@ -33,5 +33,3 @@ def get_db_connection():
         user=required_env["MYSQL_USER"],
         password=required_env["MYSQL_PASSWORD"],
     )
-
-import FlaskWebProject1.views
