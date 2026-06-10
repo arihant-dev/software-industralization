@@ -55,4 +55,4 @@ def db():
 @app.route('/version')
 def version():
     """Returns the application version."""
-    return jsonify({"version": "2.0.0"})
+    return jsonify({"version": "3.0.0"})
