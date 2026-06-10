@@ -36,3 +36,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Commit Hash
+        run: |
+          COMMIT_HASH=$(echo ${{ github.sha }} | cut -c 1-7)
+          echo "Commit Hash: $COMMIT_HASH"
+          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+      
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: iarihant/flask-app:$COMMIT_HASH
