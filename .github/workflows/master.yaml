@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: List Files
+      - name: Echo a message
         run: |
-          echo "Arihant is calling List Files"
+          echo "Arihant is calling"
