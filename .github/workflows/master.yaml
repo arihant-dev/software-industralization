@@ -82,4 +82,4 @@ jobs:
             podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
             echo "Deploying updated containers..."
             podman-compose down
-            podman-compose up -d
+            podman-compose up -d --force-recreate
