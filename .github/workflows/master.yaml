@@ -51,6 +51,7 @@ jobs:
           context: .
           push: true
           tags: iarihant/flask-app:${{ env.COMMIT_HASH }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,linux/ppc64le,linux/s390x,darwin/amd64,darwin/arm64,windows/amd64,windows/arm64          
     
     outputs:
       commit_hash: ${{ steps.vars.outputs.commit_hash }}

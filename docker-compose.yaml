@@ -1,6 +1,6 @@
 services:
   flask-app:
-    image: iarihant/flask-app:latest
+    image: iarihant/flask-app:cdd71f4
     ports:
       - 8000:8000
     environment:
