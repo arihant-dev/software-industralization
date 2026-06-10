@@ -49,3 +49,28 @@ jobs:
           context: .
           push: true
           tags: iarihant/flask-app:${{ env.COMMIT_HASH }}
+    
+    outputs:
+      commit_hash: ${{ env.COMMIT_HASH }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into Azure VM and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            COMMIT_HASH=${{ needs.build.outputs.commit_hash }}
+            echo "Pulling latest Docker image..."
+            podman pull iarihant/flask-app:${COMMIT_HASH}
+            echo "Stopping existing container using podman compose..."
+            podman-compose down
+            echo "Updating docker-compose.yaml to use the new image..."
+            sed -i "s|image: iarihant/flask-app:.*|image: iarihant/flask-app:${COMMIT_HASH}|g" docker-compose.yaml
+            echo "Starting new container with podman compose..."
+            podman-compose up -d
