@@ -81,4 +81,5 @@ jobs:
             echo "Pulling latest Docker image..."
             podman pull docker.io/iarihant/flask-app:${COMMIT_HASH}
             echo "Deploying updated containers..."
+            podman-compose down
             podman-compose up -d
